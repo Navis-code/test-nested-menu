@@ -1,0 +1,20 @@
+<button *ngIf="isRootNode; else noRoootNode" mat-raised-button color="primary" [matMenuTriggerFor]="menu">
+    {{ trigger }}
+</button>
+<ng-template #noRoootNode>
+    <button mat-menu-item [matMenuTriggerFor]="menu" (menuOpened)="getData(trigger)">
+        {{ trigger }}
+    </button>
+</ng-template>
+
+<mat-menu #menu="matMenu">
+    <ng-container *ngFor="let item of data; let i = index">
+        <button mat-menu-item class="buttonNestedMenu">
+            <app-nested-menu *ngIf="isExpandable(item.id); else menuItem" [trigger]="item.name">
+            </app-nested-menu>
+        </button>
+        <ng-template #menuItem>
+            <button mat-menu-item>{{ item.name }}</button>
+        </ng-template>
+    </ng-container>
+</mat-menu>
